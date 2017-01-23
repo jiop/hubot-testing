@@ -13,7 +13,21 @@ module.exports = (robot) ->
     res.reply "your id is #{res.message.user.id}"
 
   robot.respond /get my name/i, (res) ->
-    res.reply "your id is #{res.message.user.name}"
+    res.reply "your name is #{res.message.user.name}"
+
+  robot.respond /get my email/i, (res) ->
+    if res.message.user.email != ""
+      res.reply "your email is #{res.message.user.email}"
+      return
+    res.reply "you don't have any email configured"
+
+  robot.respond /set my email (.*)/i, (res) ->
+    email = res.match[1]
+    if email != ""
+      res.message.user.email = email
+      res.reply "your email has been set to #{res.message.user.email}"
+      return
+    res.reply "please provide a valid email"
 
   # robot.hear /badger/i, (res) ->
   #   res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
